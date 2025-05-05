@@ -7,8 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
+[AllowAnonymous]
 public class UserController(DataContext context) : BaseApiController {
-
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers() {
         var users = await context.Users.ToListAsync();
