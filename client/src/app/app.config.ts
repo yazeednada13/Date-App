@@ -1,4 +1,8 @@
 import { ApplicationConfig } from '@angular/core';
+import {
+  provideZoneLessChangeDetection,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
@@ -11,6 +15,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([errorInterceptor])),
     provideAnimations(),
+    provideZoneLessChangeDetection(),
+    provideBrowserGlobalErrorListeners(),
     provideToastr({
       positionClass: 'toast-bottom-right',
     }),

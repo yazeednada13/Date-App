@@ -12,6 +12,6 @@ public class Photo
 
     //Navigation properties
 
-    public int AppUserId { get; set; }
-    public AppUser AppUser { get; set; } = null!;
+    // public string AppUserId { get; set; }
+    // public AppUser AppUser { get; set; } = null!;
 }

@@ -36,6 +36,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
               state: { error: error.error },
             };
             router.navigateByUrl('/server-error', navigationExtras);
+            break;
           default:
             toastr.error('Something unexpected wenr error');
             break;
