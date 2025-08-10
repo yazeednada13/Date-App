@@ -2,7 +2,9 @@ using System.Net;
 using System.Text.Json;
 
 namespace API;
-public class ExceptionMiddleware(RequestDelegate next , ILogger <ExceptionMiddleware> logger , IHostEnvironment env){
+public class ExceptionMiddleware(RequestDelegate next,
+ ILogger<ExceptionMiddleware> logger, IHostEnvironment env)
+{
     public async Task InvokeAsync (HttpContext context){
         try
         {
@@ -10,7 +12,7 @@ public class ExceptionMiddleware(RequestDelegate next , ILogger <ExceptionMiddle
         }
         catch (Exception ex)
         {
-            logger.LogError(ex,ex.Message);
+            logger.LogError(ex,"{message}",ex.Message);
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 

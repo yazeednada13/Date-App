@@ -1,30 +1,34 @@
-
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NavComponent } from "./nav/nav.component";
-import { AccountService } from './_services/account.service';
-import { HomeComponent } from "./home/home.component";
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
+import { NavComponent } from '../layout/nav/nav.component';
+
+import { HomeComponent } from '../features/home/home.component';
+import { lastValueFrom } from 'rxjs';
+import { User } from '../types/user';
+import { NgClass } from '@angular/common';
 
 @Component({
-    selector: 'app-root',
-    imports: [RouterOutlet, NavComponent, HomeComponent],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.css'
+  selector: 'app-root',
+  imports: [RouterOutlet, NavComponent, HomeComponent, NgClass],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
-  private accountService = inject(AccountService);
+export class AppComponent {
+  protected router = inject(Router);
 
-  ngOnInit(): void {
-    this.setCurrentUser();
+  private http = inject(HttpClient);
+  protected title = 'Dating App';
+  protected members = signal<User[]>([]);
+
+  async getMembers() {
+    try {
+      return lastValueFrom(
+        this.http.get<User[]>('https://localhost:5001/api/user')
+      );
+    } catch (error) {
+      console.error('Error fetching members:', error);
+      throw error;
+    }
   }
-
-  setCurrentUser(){
-    const userString = localStorage.getItem('user');
-    if (!userString) return;
-    const user = JSON.parse(userString);
-    this.accountService.currentUser.set(user);
-  }
-
-  
 }

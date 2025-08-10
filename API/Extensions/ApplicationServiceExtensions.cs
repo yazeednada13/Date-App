@@ -17,7 +17,8 @@ public static class ApplicationServiceExtensions {
 // builder.Services.AddOpenApi();
         services.AddCors();
         services.AddScoped<ITokenService , TokenService>();
-        services.AddScoped<IUserRepository, UserRepository>();
+        
+        services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         return services;
     }
