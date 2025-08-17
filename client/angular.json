@@ -21,6 +21,10 @@
         "@schematics/angular:pipe": {
           "skipTests": true,
           "path": "src/core/pipes"
+        },
+        "@schematics/angular:service": {
+          "skipTests": true,
+          "path": "src/core/_services"
         }
       },
       "root": "",

@@ -5,6 +5,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { TitleCasePipe } from '@angular/common';
 import { ToastService } from '../../core/_services/toast-service';
 import { themes } from '../theme';
+import { BusyService } from '../../core/_services/busy-service';
 
 @Component({
   selector: 'app-nav',
@@ -13,6 +14,7 @@ import { themes } from '../theme';
   styleUrl: './nav.component.css',
 })
 export class NavComponent implements OnInit {
+  protected busyService = inject(BusyService);
   protected creds: any = {};
   protected accountService = inject(AccountService);
   private router = inject(Router);

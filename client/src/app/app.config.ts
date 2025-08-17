@@ -14,11 +14,14 @@ import { errorInterceptor } from '../core/_interceptors/error.interceptor';
 import { InitService } from '../core/_services/init-service';
 import { lastValueFrom } from 'rxjs';
 import { jwtInterceptor } from '../core/_interceptors/jwt-interceptor';
+import { loadingInterceptor } from '../core/_interceptors/loading-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withViewTransitions()),
-    provideHttpClient(withInterceptors([errorInterceptor, jwtInterceptor])),
+    provideHttpClient(
+      withInterceptors([errorInterceptor, jwtInterceptor, loadingInterceptor])
+    ),
     provideBrowserGlobalErrorListeners(),
     provideAnimations(),
     provideAppInitializer(async () => {

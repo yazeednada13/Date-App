@@ -10,12 +10,22 @@ public class MemberRepository(DataContext context) : IMemberRepository
     // Null if not found
     public async Task<Member?> GetMemberByIdAsync(string id)
     {
-        return await context.Members.FindAsync(id);
+        return await
+        context.Members
+        .FindAsync(id);
+    }
+
+    public async Task<Member?> GetMemberForUpdate(string id)
+    {
+        return await context.Members
+            .Include(x => x.User)
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<IReadOnlyList<Member>> GetMembersAsync()
     {
-        return await context.Members.ToListAsync();
+        return await context.Members
+        .ToListAsync();
     }
 
     public async Task<IReadOnlyList<Photo>> GetPhotosFromMemberAsync(string memberId)
