@@ -1,6 +1,7 @@
 using API;
 using API.Data;
 using API.Extensions;
+using API.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
 var app = builder.Build();
 
