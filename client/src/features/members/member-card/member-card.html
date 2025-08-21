@@ -4,7 +4,7 @@
   routerLink="/members/{{member.id}}"
 >
   <img
-    src="{{member?.imageUrl || '/user.png'}}"
+    [src]="member?.imageUrl || '/assets/user.png'"
     alt="{{member.displayName}} image"
     class="rounded-lg"
   />

@@ -35,7 +35,7 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<Photo>>> GetMemberPhotos(string id)
         {
             var photos = await memberRepository.GetPhotosFromMemberAsync(id);
-            if (photos == null || !photos.Any()) return NotFound();
+            if (photos == null || !photos.Any()) return BadRequest();
             return Ok(photos);
         }
         [HttpPut]
@@ -84,7 +84,6 @@ namespace API.Controllers
             {
                 member.ImageUrl = photo.Url;
                 member.User.ImageUrl = photo.Url;
-
             }
             member.Photos.Add(photo);
 
