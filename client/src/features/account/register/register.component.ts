@@ -63,7 +63,6 @@ export class RegisterComponent {
   }
 
   // Input from HomeComponent
-
   matchValues(matchTo: string): ValidatorFn {
     // control : confirm password
     return (control: AbstractControl): ValidationErrors | null => {
