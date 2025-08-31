@@ -18,6 +18,7 @@ public static class ApplicationServiceExtensions {
         services.AddCors();
         services.AddScoped<ITokenService , TokenService>();
         services.AddScoped<IPhotoService, PhotoService>();
+        services.AddScoped<ILikesRepository, LikesRepository>();
         services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         return services;
