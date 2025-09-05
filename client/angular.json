@@ -14,6 +14,9 @@
           "skipTests": true,
           "path": "src/core/_interceptors"
         },
+        "@schematics/angular:component": {
+          "skipTests": true
+        },
         "@schematics/angular:resolver": {
           "skipTests": true,
           "path": "src"
