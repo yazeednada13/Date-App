@@ -22,6 +22,7 @@ public static class ApplicationServiceExtensions {
         services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddScoped<IMessageRepository, MessageRepository>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        
         return services;
     }
 }   

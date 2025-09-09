@@ -28,6 +28,10 @@
         "@schematics/angular:service": {
           "skipTests": true,
           "path": "src/core/_services"
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true,
+          "path": "src/shared/directives"
         }
       },
       "root": "",

@@ -1,15 +1,18 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using API.Entities;
 using API.interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services;
 
-public class TokenService(IConfiguration config) : ITokenService
+public class TokenService(IConfiguration config, UserManager<AppUser> userManager) : ITokenService
 {
-    public string CreateToken(AppUser user)
+    public async Task<string> CreateToken(AppUser user)
     {
         var tokenKey = config["TokenKey"] ?? throw new Exception ("Cannot access token key from appsettings");
 
@@ -21,15 +24,19 @@ public class TokenService(IConfiguration config) : ITokenService
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier , user.Id),
-            new(ClaimTypes.Email , user.Email)
+            new(ClaimTypes.Email , user.Email!)
         };
 
+        var roles = await userManager.GetRolesAsync(user);
+
         var creds = new SigningCredentials(key,SecurityAlgorithms.HmacSha512Signature);
+
+        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
         var tokenDescriptor = new SecurityTokenDescriptor 
         {
             Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.AddDays(7),
+            Expires = DateTime.UtcNow.AddMinutes(7),
             SigningCredentials = creds
         };
 
@@ -38,4 +45,11 @@ public class TokenService(IConfiguration config) : ITokenService
 
         return tokenHandler.WriteToken(token);
     }
-}
+
+    public string GenerateRefreshToken()
+    {
+        var randomBytes = RandomNumberGenerator.GetBytes(64);
+        return Convert.ToBase64String(randomBytes);
+         
+    }
+} 
