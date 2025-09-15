@@ -3,6 +3,7 @@ using API.Data;
 using API.Entities;
 using API.Extensions;
 using API.Helpers;
+using API.SignalR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +41,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<PresenceHub>("hubs/presence");
+app.MapHub<MessageHub>("hubs/messages");
 
 
 
@@ -52,6 +55,7 @@ try
     var userManger = services.GetRequiredService<UserManager<AppUser>>();
     // pending migrations
     await context.Database.MigrateAsync();
+    await context.Connections.ExecuteDeleteAsync();
     await Seed.SeedUsers(userManger);
 }
 catch (Exception ex)

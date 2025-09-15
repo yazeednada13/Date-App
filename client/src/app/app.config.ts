@@ -9,7 +9,7 @@ import { provideRouter, withViewTransitions } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { provideToastr } from 'ngx-toastr';
+
 import { errorInterceptor } from '../core/_interceptors/error.interceptor';
 import { InitService } from '../core/_services/init-service';
 import { lastValueFrom } from 'rxjs';

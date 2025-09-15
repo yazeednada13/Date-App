@@ -14,6 +14,8 @@ public class DataContext(DbContextOptions<DataContext> options) : IdentityDbCont
     public DbSet<Photo> Photos { get; set; }
     public DbSet<MemberLike> Likes {get;set;}
     public DbSet<Message> Messages { get; set; }
+    public DbSet<Group> Groups { get; set; }
+    public DbSet<Connection> Connections { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -47,13 +49,13 @@ public class DataContext(DbContextOptions<DataContext> options) : IdentityDbCont
 
         modelBuilder.Entity<Message>()
             .HasOne(m => m.Sender)
-            .WithMany(s => s.MessagesSent)   
-            .OnDelete(DeleteBehavior.Restrict); 
+            .WithMany(s => s.MessagesSent)
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Message>()
             .HasOne(m => m.Recipient)
             .WithMany(s => s.MessagesReceived)
-            .OnDelete(DeleteBehavior.Restrict); 
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<MemberLike>()
             .HasOne(s => s.SourceMember)

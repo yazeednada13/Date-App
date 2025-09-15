@@ -13,6 +13,7 @@ import { filter, Observable } from 'rxjs';
 import { Member } from '../../../types/member';
 import { AgePipe } from '../../../core/pipes/age-pipe';
 import { AccountService } from '../../../core/_services/account.service';
+import { PresenceService } from '../../../core/_services/presence-service';
 
 @Component({
   selector: 'app-member-detail',
@@ -23,6 +24,7 @@ import { AccountService } from '../../../core/_services/account.service';
 export class MemberDetailComponent implements OnInit {
   protected memberService = inject(MemberService);
   private accountSevice = inject(AccountService);
+  protected presenceService = inject(PresenceService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
