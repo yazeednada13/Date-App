@@ -19,9 +19,7 @@ public static class ApplicationServiceExtensions {
         services.AddCors();
         services.AddScoped<ITokenService , TokenService>();
         services.AddScoped<IPhotoService, PhotoService>();
-        services.AddScoped<ILikesRepository, LikesRepository>();
-        services.AddScoped<IMemberRepository, MemberRepository>();
-        services.AddScoped<IMessageRepository, MessageRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddSignalR();
         services.AddSingleton<PresenceTracker>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

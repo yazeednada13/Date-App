@@ -14,6 +14,7 @@ import { Member } from '../../../types/member';
 import { AgePipe } from '../../../core/pipes/age-pipe';
 import { AccountService } from '../../../core/_services/account.service';
 import { PresenceService } from '../../../core/_services/presence-service';
+import { LikesService } from '../../../core/_services/likes-service';
 
 @Component({
   selector: 'app-member-detail',
@@ -27,17 +28,24 @@ export class MemberDetailComponent implements OnInit {
   protected presenceService = inject(PresenceService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-
+  private routeId = signal<string | null>(null);
+  protected likesService = inject(LikesService);
   // if route change, title will change
   protected title = signal<string | undefined>('Profile');
   // Computed : return true or false
   // if current user is the same as the member in the route
   protected isCurrentUser = computed(() => {
-    return (
-      this.accountSevice.currentUser()?.id ===
-      this.route.snapshot.paramMap.get('id')
-    );
+    return this.accountSevice.currentUser()?.id === this.routeId();
   });
+  protected hasLiked = computed(() =>
+    this.likesService.likeIds().includes(this.routeId()!)
+  );
+
+  constructor() {
+    this.route.paramMap.subscribe((params) => {
+      this.routeId.set(params.get('id'));
+    });
+  }
 
   ngOnInit(): void {
     // first child is the child route of member detail

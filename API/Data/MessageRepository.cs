@@ -93,8 +93,5 @@ public class MessageRepository(DataContext context) : IMessageRepository
             .ExecuteDeleteAsync();
     }
 
-    public async Task<bool> SaveAllAsync()
-    {
-        return await context.SaveChangesAsync() > 0;
-    }
+    
 }

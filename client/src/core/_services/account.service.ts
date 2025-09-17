@@ -80,10 +80,16 @@ export class AccountService {
     this.presenceService.createHubConnection(user);
   }
   logout() {
-    localStorage.removeItem('filters');
-    this.likesService.clearLikeId();
-    this.currentUser.set(null);
-    this.presenceService.stopHubConnection();
+    this.http
+      .post(this.baseUrl + 'account/logout', {}, { withCredentials: true })
+      .subscribe({
+        next: () => {
+          localStorage.removeItem('filters');
+          this.likesService.clearLikeId();
+          this.currentUser.set(null);
+          this.presenceService.stopHubConnection();
+        },
+      });
   }
   private getRolesFromToken(user: User): string[] {
     const payload = user.token.split('.')[1];

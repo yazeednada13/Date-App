@@ -20,6 +20,7 @@ export class NavComponent implements OnInit {
   protected accountService = inject(AccountService);
   private router = inject(Router);
   private toast = inject(ToastService);
+  protected loading = signal(false);
   protected selectedTheme = signal<string>(
     localStorage.getItem('theme') || 'light'
   );
@@ -37,8 +38,15 @@ export class NavComponent implements OnInit {
       elem.blur(); // Remove focus from the select element
     }
   }
+  handleSelectUserItem() {
+    const elem = document.activeElement as HTMLElement;
+    if (elem) {
+      elem.blur(); // Remove focus from the select element
+    }
+  }
 
   login() {
+    this.loading.set(true);
     this.accountService.login(this.creds).subscribe({
       next: (result) => {
         this.router.navigateByUrl('/members');
@@ -47,6 +55,9 @@ export class NavComponent implements OnInit {
       },
       error: (error) => {
         this.toast.error(error.error);
+      },
+      complete: () => {
+        this.loading.set(false);
       },
     });
   }
