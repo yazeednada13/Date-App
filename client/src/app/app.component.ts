@@ -8,6 +8,7 @@ import { lastValueFrom } from 'rxjs';
 import { User } from '../types/user';
 import { NgClass } from '@angular/common';
 import { ConfirmDialog } from './shared/confirm-dialog/confirm-dialog';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -21,12 +22,10 @@ export class AppComponent {
   private http = inject(HttpClient);
   protected title = 'Dating App';
   protected members = signal<User[]>([]);
-
+  baseUrl = environment.apiUrl;
   async getMembers() {
     try {
-      return lastValueFrom(
-        this.http.get<User[]>('https://localhost:5001/api/user')
-      );
+      return lastValueFrom(this.http.get<User[]>(this.baseUrl + 'api/user'));
     } catch (error) {
       console.error('Error fetching members:', error);
       throw error;

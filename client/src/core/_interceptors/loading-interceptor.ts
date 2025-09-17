@@ -1,7 +1,8 @@
 import { HttpInterceptorFn, HttpParams } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { BusyService } from '../_services/busy-service';
-import { delay, finalize, of, tap } from 'rxjs';
+import { delay, finalize, identity, of, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 const cache = new Map<string, any>();
 export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
@@ -45,7 +46,7 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
   busyService.busy();
 
   return next(req).pipe(
-    delay(500), // Simulate a delay for demonstration purposes
+    environment.production ? identity : delay(500), // Simulate a delay for demonstration purposes
     tap((response) => {
       cache.set(cacheKey, response); // Cache the response
     }),

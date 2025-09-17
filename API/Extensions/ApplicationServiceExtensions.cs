@@ -12,7 +12,7 @@ public static class ApplicationServiceExtensions {
 
         services.AddControllers();
         services.AddDbContext<DataContext>(opt => {
-               opt.UseSqlite(config.GetConnectionString("DefaultConection"));
+               opt.UseSqlServer(config.GetConnectionString("DefaultConection"));
 });
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 // builder.Services.AddOpenApi();
