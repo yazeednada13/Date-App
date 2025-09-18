@@ -3,6 +3,7 @@ import {
   effect,
   ElementRef,
   inject,
+  model,
   OnDestroy,
   OnInit,
   signal,
@@ -32,7 +33,7 @@ export class MemberMessages implements OnInit, OnDestroy {
   //  not the one who is logged in.
   private memberService = inject(MemberService);
   private router = inject(ActivatedRoute);
-  protected messageContent = '';
+  protected messageContent = model('');
   constructor() {
     effect(() => {
       const currentMessages = this.messageService.messageThread();
@@ -56,11 +57,11 @@ export class MemberMessages implements OnInit, OnDestroy {
 
   sendMessage() {
     const recipientId = this.memberService.member()?.id;
-    if (!recipientId) return;
+    if (!recipientId || !this.messageContent()) return;
     this.messageService
-      .sendMessage(recipientId, this.messageContent)
+      .sendMessage(recipientId, this.messageContent())
       ?.then(() => {
-        this.messageContent = '';
+        this.messageContent.set('');
       });
   }
   scrollToBottom() {
